@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://deflmjpwldpjd"]
+
+[ext_resource type="Script" uid="uid://ej3r2i4b3he7" path="res://Scenes/Player/player_contoller.gd" id="1_d811k"]
+[ext_resource type="Script" uid="uid://bwb8jotogyl5w" path="res://Scenes/Player/camera.gd" id="2_7dr6w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h7smk"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jg3cx"]
+
+[node name="Player Contoller" type="CharacterBody3D"]
+script = ExtResource("1_d811k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_h7smk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jg3cx")
+
+[node name="CameraContollerAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+top_level = true
+script = ExtResource("2_7dr6w")
+
+[node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera Pivot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+target_position = Vector3(0, 0, -3)
+collision_mask = 2
+
+[node name="Hand" type="Node3D" parent="Camera Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -1.5)

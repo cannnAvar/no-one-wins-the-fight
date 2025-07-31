@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://cj3gihdetmhql"]
+
+[ext_resource type="PackedScene" uid="uid://deflmjpwldpjd" path="res://Scenes/Player/player_contoller.tscn" id="1_a02cp"]
+[ext_resource type="Texture2D" uid="uid://4mmd2e027l6" path="res://Assets/Dark/texture_01.png" id="1_go701"]
+[ext_resource type="PackedScene" uid="uid://hnjt7ynfwi4d" path="res://Scenes/Bottle/bottle.tscn" id="3_5a7ea"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_go701"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_5a7ea"]
+sky_material = SubResource("ProceduralSkyMaterial_go701")
+
+[sub_resource type="Environment" id="Environment_8j60k"]
+sky = SubResource("Sky_5a7ea")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_a02cp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5a7ea"]
+albedo_texture = ExtResource("1_go701")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8j60k"]
+material = SubResource("StandardMaterial3D_5a7ea")
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5a7ea"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8j60k"]
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8j60k")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -0.0765686)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_a02cp")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_8j60k")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.19212, -5.5)
+light_energy = 10.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.5, 1.69212, 2)
+light_color = Color(0.315153, 0.542792, 1.92523e-07, 1)
+light_energy = 10.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 2.69212, 2)
+light_color = Color(0, 0.626477, 0.679365, 1)
+light_energy = 10.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2, 2.69212, 0)
+light_color = Color(1, 0.244867, 0.383562, 1)
+light_energy = 10.0
+
+[node name="Player Contoller" parent="." instance=ExtResource("1_a02cp")]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.5, -0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.5)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 1, 0, 1.5)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." groups=["Pickable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 3.5, 2)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_5a7ea")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_8j60k")
+
+[node name="Bottle" parent="." instance=ExtResource("3_5a7ea")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 3.5, 0)

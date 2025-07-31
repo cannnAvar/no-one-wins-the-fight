@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://hnjt7ynfwi4d"]
+
+[ext_resource type="PackedScene" uid="uid://bwear4qcbhwkn" path="res://Scenes/Bottle/Sise.glb" id="1_ak08n"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jeu0y"]
+height = 4.5625
+radius = 0.646973
+
+[node name="Bottle" type="RigidBody3D" groups=["Pickable"]]
+collision_layer = 2
+
+[node name="Sise" parent="." instance=ExtResource("1_ak08n")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_jeu0y")
